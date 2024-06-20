@@ -1,5 +1,7 @@
 # 导入模块
 import pygame, time, Bullet, Explode, Plance, Wall, config
+
+import Props
 from Music import Music
 
 
@@ -14,6 +16,7 @@ class MainGame:
         pygame.display.init()  # 加载主窗口
         config.window = pygame.display.set_mode([config.SCREEN_WIDTH, config.SCREEN_HEIGHT])  # 设置窗口大小并显示
         Plance.createMyPlance(280, 210)
+        Props.createBUprops(50,800)
         background = pygame.image.load("img/back.gif")
         # 窗口标题设置
         pygame.display.set_caption("无限飞行" + config.version)
@@ -27,6 +30,10 @@ class MainGame:
                     Plance.createEnemyPlance(50, 600)  # 初始化敌方飞机
                     Plance.createEnemyPlance(350, 600)
                 config.window.blit(background, (0, 0))
+                if len(config.enemyList) == 10 and len(config.hppropslist) < 1:
+                    Props.createHPprops()
+                Props.bilHPprops()
+                Props.bilBUprops()
                 # # 颜色填充
                 # config.window.fill(background)
                 # 获取事件
@@ -46,16 +53,12 @@ class MainGame:
                 else:
                     del config.myplance  # 删除我方飞机
                     config.myplance = None
+                Plance.bilMyPlance()
                 Plance.blitEnemyPlance()  # 展示敌方飞机
                 Bullet.blitMyBullet()  # 我方飞机子弹
                 Bullet.blitEnemyBullet()  # 展示敌方子弹
                 Explode.blitExplode()  # 爆炸效果展示
                 Wall.blitWall()  # 展示墙壁
-                if config.myplance and config.myplance.live:
-                    if not config.myplance.stop:
-                        config.myplance.move()  # 调用飞机移动方法
-                        config.myplance.hitWall()
-                        config.myplance.myplance_hit_enemyplance()
                 self.GameOver()
                 pygame.display.update()
             while not config.RUN:

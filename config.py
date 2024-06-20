@@ -18,4 +18,6 @@ myBulletList = []  # 我方飞机子弹列表
 enemyBulletList = []  # 敌方飞机子弹列表
 explodeList = []  # 爆炸效果列表
 WallList = []  # 墙壁列表
+hppropslist = []
+bupopslist = []
 hitTank = 0

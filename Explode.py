@@ -2,8 +2,8 @@ import pygame, config
 
 
 class Explode():
-    def __init__(self, tank):
-        self.rect = tank.rect
+    def __init__(self, Plance):
+        self.rect = Plance.rect
         self.images = [
             pygame.image.load('img/blast0.gif'),
             pygame.image.load('img/blast1.gif'),

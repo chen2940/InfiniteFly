@@ -73,6 +73,13 @@ class MyPlance(Plance):
             if pygame.sprite.collide_rect(self, enemyPlance):
                 self.stay()
 
+    def MyPlance_hit_HP(self):
+        for HP in config.hppropslist:
+            if pygame.sprite.collide_rect(self, HP):
+                self.live += 1
+                HP.live = False
+                self.stay()
+
 
 # 敌方飞机
 class EnemyPlance(Plance):
@@ -137,6 +144,13 @@ def createEnemyPlance(top, left):  # 初始化敌方飞机, 将敌方飞机添�
         enemy = EnemyPlance(aleft, top, speed)
         config.enemyList.append(enemy)
 
+def bilMyPlance():
+    if config.myplance and config.myplance.live:
+        if not config.myplance.stop:
+            config.myplance.move()  # 调用飞机移动方法
+            config.myplance.hitWall()
+            config.myplance.myplance_hit_enemyplance()
+            config.myplance.MyPlance_hit_HP()
 
 def blitEnemyPlance():
     for enemyPlance in config.enemyList:
