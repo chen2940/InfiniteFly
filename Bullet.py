@@ -68,7 +68,7 @@ class Bullet(Baseitem):
                 self.live = False
                 explode = Explode(enemyTank)
                 config.explodeList.append(explode)
-                config.hitTank += 1
+                config.Point += 1
 
     def enemyBullet_hit_myTank(self):
         if config.myplance and config.myplance.live:

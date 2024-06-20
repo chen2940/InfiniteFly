@@ -16,7 +16,6 @@ class MainGame:
         pygame.display.init()  # 加载主窗口
         config.window = pygame.display.set_mode([config.SCREEN_WIDTH, config.SCREEN_HEIGHT])  # 设置窗口大小并显示
         Plance.createMyPlance(280, 210)
-        Props.createBUprops(50,800)
         background = pygame.image.load("img/back.gif")
         # 窗口标题设置
         pygame.display.set_caption("无限飞行" + config.version)
@@ -30,8 +29,10 @@ class MainGame:
                     Plance.createEnemyPlance(50, 600)  # 初始化敌方飞机
                     Plance.createEnemyPlance(350, 600)
                 config.window.blit(background, (0, 0))
-                if len(config.enemyList) == 10 and len(config.hppropslist) < 1:
+                if len(config.enemyList) == 10 and len(config.hppropslist) == 0:
                     Props.createHPprops()
+                if len(config.enemyList) == 5 and len(config.bupopslist) == 0:
+                    Props.createBUprops()
                 Props.bilHPprops()
                 Props.bilBUprops()
                 # # 颜色填充
@@ -48,6 +49,9 @@ class MainGame:
                 config.window.blit(
                     self.getTextSuface("剩余生命：%d"%config.myplance.live, 16, config.TEXT_COLOR),
                     (50, 470))
+                config.window.blit(
+                    self.getTextSuface("得分：%d" % config.Point, 20, config.TEXT_COLOR),
+                    (420, 10))
                 if config.myplance and config.myplance.live:
                     config.myplance.displayPlance()  # 展 示我方飞机
                 else:
@@ -71,8 +75,8 @@ class MainGame:
             if not config.myplance:
                 config.O_COLOR = pygame.Color(255, 0, 0)
             pygame.draw.rect(config.window, [0, 0, 0], [0, 0, config.SCREEN_WIDTH, config.SCREEN_HEIGHT], 0)
-            config.window.blit(self.getTextSuface("Game Over", 50, config.O_COLOR), (300, 150))
-            config.window.blit(self.getTextSuface("击杀数量：%d" % config.hitTank, 20, config.O_COLOR), (350, 200))
+            config.window.blit(self.getTextSuface("Game Over", 50, config.O_COLOR), (250, 150))
+            config.window.blit(self.getTextSuface("得分：%d" % config.Point, 20, config.O_COLOR), (300, 200))
             config.RUN = False
 
     # 结束游戏
@@ -83,7 +87,7 @@ class MainGame:
     # 文字显示
     def getTextSuface(self, text, size, color):
         pygame.font.init()  # 字体初始化
-        font = pygame.font.SysFont('kaiti', size)
+        font = pygame.font.Font('img/msyh.ttc', size)
         # 绘制文字信息
         textSurface = font.render(text, True, color)
         return textSurface
@@ -105,23 +109,18 @@ class MainGame:
                     if event.key == pygame.K_LEFT:
                         config.myplance.direction = 'L'
                         config.myplance.stop = False
-                        print('左键,')
                     elif event.key == pygame.K_RIGHT:
                         config.myplance.direction = 'R'
                         config.myplance.stop = False
-                        print('右键,')
                     elif event.key == pygame.K_UP:
                         config.myplance.direction = 'U'
                         config.myplance.stop = False
-                        print('上键,')
                     elif event.key == pygame.K_DOWN:
                         config.myplance.direction = 'D'
                         config.myplance.stop = False
-                        print('下键, ')
                     elif event.key == pygame.K_ESCAPE:
                         self.endGame()
                     elif event.key == pygame.K_SPACE:
-                        print('发射子弹')
                         if len(config.myBulletList) < 3:  # 可以同时发射子弹数量的上限
                             myBullet = Bullet.Bullet(config.myplance)
                             config.myBulletList.append(myBullet)

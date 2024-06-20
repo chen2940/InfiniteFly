@@ -9,6 +9,7 @@ TEXT_COLOR = pygame.Color(255, 0, 0)  # 字体颜色
 O_COLOR = pygame.Color(255, 255, 255)
 scaled_width = 60
 scaled_height = 60
+Point = 0
 
 window = None
 myplance = None
@@ -20,4 +21,3 @@ explodeList = []  # 爆炸效果列表
 WallList = []  # 墙壁列表
 hppropslist = []
 bupopslist = []
-hitTank = 0

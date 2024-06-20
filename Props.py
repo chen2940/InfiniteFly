@@ -24,17 +24,29 @@ class Props(Baseitem):
             self.image = pygame.image.load("img/bullet.bmp")
             config.window.blit(self.image, self.rect)
 
+class HPprops(Props):
+    def __init__(self, left, top):
+        super().__init__(left, top)
+
+
+
+class BUprops(Props):
+    def __init__(self, left, top):
+        super().__init__(left, top)
+
+
 
 def createHPprops():
     aleft = random.randint(0, 800)
-    atop = random.randint(350,450)
+    atop = random.randint(350, 450)
     hp = Props(aleft, atop)
     config.hppropslist.append(hp)
 
 
-def createBUprops(top, left):
-    aleft = random.randint(0, left)
-    bu = Props(aleft, top)
+def createBUprops():
+    aleft = random.randint(0, 800)
+    atop = random.randint(50, 200)
+    bu = Props(aleft, atop)
     config.bupopslist.append(bu)
 
 
