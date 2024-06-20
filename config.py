@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-version = "V2.0"
+version = "V3.0rc1"
 RUN = True
 SCREEN_WIDTH = 800  # 宽度
 SCREEN_HEIGHT = 500  # 高度
@@ -12,6 +12,12 @@ O_COLOR = pygame.Color(255, 255, 255)
 scaled_width = 60
 scaled_height = 60
 Point = 0
+background = pygame.image.load("img/back.gif")
+hbackground = pygame.image.load("img/home.jpg")
+ebackground = pygame.image.load("img/end.jpg")
+HOME = True
+START = False
+END = False
 
 window = None
 myplance = None
