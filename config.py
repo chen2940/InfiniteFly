@@ -12,10 +12,10 @@ scaled_height = 60
 
 window = None
 myplance = None
-enemyList = []  # 敌方坦克列表
-enemyCount = 5  # 敌方坦克数量
-myBulletList = []  # 我方坦克子弹列表
-enemyBulletList = []  # 敌方坦克子弹列表
+enemyList = []  # 敌方飞机列表
+enemyCount = 5  # 敌方飞机数量
+myBulletList = []  # 我方飞机子弹列表
+enemyBulletList = []  # 敌方飞机子弹列表
 explodeList = []  # 爆炸效果列表
 WallList = []  # 墙壁列表
 hitTank = 0

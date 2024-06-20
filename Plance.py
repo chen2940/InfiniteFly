@@ -20,7 +20,7 @@ class Plance(Baseitem):
         self.rect = self.image.get_rect()  # 根据图片获取区域
         self.rect.left, self.rect.top = left, top
         self.speed = 5  # 移动速度
-        self.stop = True  # 坦克移动开关
+        self.stop = True  # 飞机移动开关
         self.live = 5
         self.OldLeft = self.rect.left
         self.OldTop = self.rect.top
@@ -29,7 +29,7 @@ class Plance(Baseitem):
     def move(self):
         self.OldLeft = self.rect.left
         self.OldTop = self.rect.top
-        # 判断坦克方向进行移动
+        # 判断飞机方向进行移动
         if self.direction == 'L':
             if self.rect.left > 0:
                 self.rect.left -= self.speed
@@ -74,7 +74,7 @@ class MyPlance(Plance):
                 self.stay()
 
 
-# 敌方坦克
+# 敌方飞机
 class EnemyPlance(Plance):
     def __init__(self, left, top, speed):
         super(EnemyPlance, self).__init__(left, top)
@@ -91,8 +91,8 @@ class EnemyPlance(Plance):
         self.rect = self.image.get_rect()  # 获取区域
         self.rect.left, self.rect.top = left, top  # 对left和top赋值
         self.speed = speed  # 速度
-        self.flag = True  # 坦克移动开关
-        self.step = 10  # 敌方坦克步数
+        self.flag = True  # 飞机移动开关
+        self.step = 10  # 敌方飞机步数
 
     def enemyplance_hit_myplance(self):
         if pygame.sprite.collide_rect(self, config.myplance):
@@ -109,7 +109,7 @@ class EnemyPlance(Plance):
         elif nums == 4:
             return "R"
 
-    def randMove(self):  # 坦克的随机方向移动
+    def randMove(self):  # 飞机的随机方向移动
         if self.step < 0:  # 步数小于0, 随机改变方向
             self.direction = self.randDirection()
             self.step = 50  # 步数复位
@@ -124,14 +124,14 @@ class EnemyPlance(Plance):
 
 
 ###
-def createMyPlance(left, top):  # 初始化我方坦克
+def createMyPlance(left, top):  # 初始化我方飞机
     config.myplance = MyPlance(left, top)
     music = Music('img/start.wav')  # 创建音乐对象
     music.play()  # 播放音乐
 
 
-def createEnemyPlance(top, left):  # 初始化敌方坦克, 将敌方坦克添加到列表中
-    for i in range(config.enemyCount):  # 生成指定敌方坦克数量
+def createEnemyPlance(top, left):  # 初始化敌方飞机, 将敌方飞机添加到列表中
+    for i in range(config.enemyCount):  # 生成指定敌方飞机数量
         aleft = random.randint(0, left)
         speed = random.randint(1, 4)
         enemy = EnemyPlance(aleft, top, speed)
@@ -140,7 +140,7 @@ def createEnemyPlance(top, left):  # 初始化敌方坦克, 将敌方坦克添�
 
 def blitEnemyPlance():
     for enemyPlance in config.enemyList:
-        if enemyPlance.live:  # 判断敌方坦克状态
+        if enemyPlance.live:  # 判断敌方飞机状态
             enemyPlance.displayPlance()
             enemyPlance.randMove()  # 调用子弹移动
             enemyPlance.hitWall()
@@ -148,7 +148,7 @@ def blitEnemyPlance():
                 enemyPlance.enemyplance_hit_myplance()
             if len(config.enemyBulletList) < 2:
                 enemyBullet = enemyPlance.shot()  # 敌方飞机射击
-                if enemyBullet:  # 判断敌方坦克子弹是否为None
-                    config.enemyBulletList.append(enemyBullet)  # 存储敌方坦克子弹
+                if enemyBullet:  # 判断敌方飞机子弹是否为None
+                    config.enemyBulletList.append(enemyBullet)  # 存储敌方飞机子弹
         else:
             config.enemyList.remove(enemyPlance)

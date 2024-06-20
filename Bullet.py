@@ -76,7 +76,7 @@ class Bullet(Baseitem):
                 explode = Explode(config.myplance)  # 爆炸对象
                 config.explodeList.append(explode)  # 将爆炸对象添加到爆炸列表中
                 self.live = False  # 修改敌方子弹的状态
-                config.myplance.live -= 1  # 我方坦克的状态
+                config.myplance.live -= 1  # 我方飞机的状态
 
 
 #123
@@ -86,7 +86,7 @@ def blitMyBullet():  # 循环我方子弹列表, 并展示
             myBullet.displayBullet()
             myBullet.move()
             myBullet.myBullet_hit_enemyTank()
-            myBullet.hitWall()  # 检测我方坦克子弹是否碰撞
+            myBullet.hitWall()  # 检测我方飞机子弹是否碰撞
         else:
             config.myBulletList.remove(myBullet)
 
@@ -97,6 +97,6 @@ def blitEnemyBullet():  # 循环敌方子弹列表, 并展示
             enemyBullet.displayBullet()
             enemyBullet.move()
             enemyBullet.enemyBullet_hit_myTank()
-            enemyBullet.hitWall()  # 检测敌方坦克子弹是否碰撞
+            enemyBullet.hitWall()  # 检测敌方飞机子弹是否碰撞
         else:
             config.enemyBulletList.remove(enemyBullet)

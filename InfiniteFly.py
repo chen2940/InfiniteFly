@@ -33,7 +33,7 @@ class MainGame:
                 self.getEvent()
                 # 绘制文字
                 config.window.blit(
-                    self.getTextSuface('敌方坦克剩余数量%d' % len(config.enemyList), 16, config.TEXT_COLOR),
+                    self.getTextSuface('敌方飞机剩余数量%d' % len(config.enemyList), 16, config.TEXT_COLOR),
                     (10, 10))
                 config.window.blit(
                     self.getTextSuface(config.version, 16, config.TEXT_COLOR),
@@ -42,18 +42,18 @@ class MainGame:
                     self.getTextSuface("剩余生命：%d"%config.myplance.live, 16, config.TEXT_COLOR),
                     (50, 470))
                 if config.myplance and config.myplance.live:
-                    config.myplance.displayPlance()  # 展 示我方坦克
+                    config.myplance.displayPlance()  # 展 示我方飞机
                 else:
-                    del config.myplance  # 删除我方坦克
+                    del config.myplance  # 删除我方飞机
                     config.myplance = None
-                Plance.blitEnemyPlance()  # 展示敌方坦克
-                Bullet.blitMyBullet()  # 我方坦克子弹
+                Plance.blitEnemyPlance()  # 展示敌方飞机
+                Bullet.blitMyBullet()  # 我方飞机子弹
                 Bullet.blitEnemyBullet()  # 展示敌方子弹
                 Explode.blitExplode()  # 爆炸效果展示
                 Wall.blitWall()  # 展示墙壁
                 if config.myplance and config.myplance.live:
                     if not config.myplance.stop:
-                        config.myplance.move()  # 调用坦克移动方法
+                        config.myplance.move()  # 调用飞机移动方法
                         config.myplance.hitWall()
                         config.myplance.myplance_hit_enemyplance()
                 self.GameOver()
@@ -94,7 +94,7 @@ class MainGame:
                 self.endGame()
             # 键盘按键
             if event.type == pygame.KEYDOWN:
-                if not config.myplance:  # 当我方坦克不存在时, 按下Esc键重生
+                if not config.myplance:  # 当我方飞机不存在时, 按下Esc键重生
                     if event.key == pygame.K_p:
                         Plance.createMyPlance()
                 if config.myplance and config.myplance.live:
@@ -124,7 +124,7 @@ class MainGame:
                             config.myBulletList.append(myBullet)
                             music = Music('img/fire.wav')
                             music.play()
-            # 松开键盘, 坦克停止移动
+            # 松开键盘, 飞机停止移动
             if event.type == pygame.KEYUP:
                 # 只有松开上、下、左、右键时坦克才停止, 松开空格键坦克不停止
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
