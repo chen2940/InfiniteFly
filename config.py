@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 version = "V2.0"
@@ -19,5 +21,9 @@ myBulletList = []  # 我方飞机子弹列表
 enemyBulletList = []  # 敌方飞机子弹列表
 explodeList = []  # 爆炸效果列表
 WallList = []  # 墙壁列表
+BulletCount = 6
 hppropslist = []
 bupopslist = []
+HPCount = 0
+BUCount = 0
+Ra = random.randint(1, 3)

@@ -76,15 +76,13 @@ class MyPlance(Plance):
     def MyPlance_hit_HP(self):
         for HP in config.hppropslist:
             if pygame.sprite.collide_rect(self, HP):
-                self.live += 1
+                self.live += 2
                 HP.live = False
-                self.stay()
     def MyPlance_hit_BU(self):
         for BU in config.bupopslist:
             if pygame.sprite.collide_rect(self, BU):
-                self.live += 1
+                config.BulletCount += 3
                 BU.live = False
-                self.stay()
 
 
 # 敌方飞机

@@ -1,7 +1,4 @@
-import random
-import time
-
-import pygame, config
+import random,time,pygame, config
 
 import Plance
 from Baseitem import Baseitem
