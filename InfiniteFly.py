@@ -52,11 +52,6 @@ class MainGame:
                 config.window.blit(
                     self.getTextSuface("得分：%d" % config.Point, 20, config.TEXT_COLOR),
                     (420, 10))
-                if config.myplance and config.myplance.live:
-                    config.myplance.displayPlance()  # 展 示我方飞机
-                else:
-                    del config.myplance  # 删除我方飞机
-                    config.myplance = None
                 Plance.bilMyPlance()
                 Plance.blitEnemyPlance()  # 展示敌方飞机
                 Bullet.blitMyBullet()  # 我方飞机子弹

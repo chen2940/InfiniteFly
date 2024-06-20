@@ -160,6 +160,11 @@ def bilMyPlance():
             config.myplance.MyPlance_hit_BU()
 
 def blitEnemyPlance():
+    if config.myplance and config.myplance.live:
+        config.myplance.displayPlance()  # 展 示我方飞机
+    else:
+        del config.myplance  # 删除我方飞机
+        config.myplance = None
     for enemyPlance in config.enemyList:
         if enemyPlance.live:  # 判断敌方飞机状态
             enemyPlance.displayPlance()
