@@ -1,5 +1,7 @@
 import pygame, config
 
+from Music import Music
+
 
 class Explode():
     def __init__(self, Plance):
@@ -28,6 +30,8 @@ class Explode():
 
 def blitExplode():
     for expolde in config.explodeList:
+        music = Music("img/music/fire-magic-6947.mp3")
+        music.play()
         if expolde.live:
             expolde.displayExplode()
         else:

@@ -3,6 +3,8 @@ import time
 
 import pygame
 
+import Music
+
 t = time.localtime()
 version = "V3.0rc5"
 RUN = True
@@ -25,7 +27,8 @@ MySpeed = 7
 MyLive = 5
 enemy = True
 BOSS = False
-
+startmusic = Music.Music("img/music/gamemusic-6082.mp3")
+clock = pygame.time.Clock()
 window = None
 myplance = None
 enemyList = []  # 敌方飞机列表

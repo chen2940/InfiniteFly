@@ -29,12 +29,13 @@ class MainGame():
     # 开始游戏
     def startGame(self):
         pygame.display.init()  # 加载主窗口
+        music = Music("img/music/home.mp3")
+        music.inplay()
         config.window = pygame.display.set_mode([config.SCREEN_WIDTH, config.SCREEN_HEIGHT])  # 设置窗口大小并显示
         Plance.createMyPlance(350, 160, config.MySpeed, config.MyLive)
         # 窗口标题设置
         pygame.display.set_caption("无限飞行" + config.version)
         while True:
-            time.sleep(0.02)
             if config.HOME:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -82,7 +83,7 @@ class MainGame():
                         Plance.createEnemyPlance(350, 600)
                         config.BOSS = True
                         config.enemy = False
-                if len(config.bosslist) == 0 and config.BOSS :
+                if len(config.bosslist) == 0 and config.BOSS:
                     if len(config.enemyList) == 2:
                         Plance.createBossPlance(210, 600)
                         config.enemy = True
@@ -139,9 +140,12 @@ class MainGame():
                         if event.key == pygame.K_ESCAPE:
                             self.endGame()
                 self.GameOver()
-                pygame.display.update()
+            pygame.display.flip()
+            config.clock.tick(30)
 
     def GameOver(self):
+        music = Music("img/music/over.mp3")
+        music.play()
         config.END = True
         config.START = False
         config.O_COLOR = pygame.Color(255, 0, 0)
@@ -201,8 +205,8 @@ class MainGame():
                         config.BulletCount -= 1
                         myBullet = Bullet.Bullet(config.myplance)
                         config.myBulletList.append(myBullet)
-                        music = Music('img/fire.wav')
-                        music.play()
+                        musicn = Music('img/music/fire.wav')
+                        musicn.play()
             # 松开键盘, 飞机停止移动
             if event.type == pygame.KEYUP:
                 # 只有松开上、下、左、右键时坦克才停止, 松开空格键坦克不停止

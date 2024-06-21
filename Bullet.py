@@ -22,7 +22,7 @@ class Bullet(Baseitem):
         elif self.direction == 'R':
             self.rect.left = tank.rect.left + tank.rect.width
             self.rect.top = tank.rect.top + tank.rect.width / 2 - self.rect.width / 2
-        self.speed = 10  # 子弹的速度
+        self.speed = 5  # 子弹的速度
         self.live = True  # 子弹的状态
 
     # 移动

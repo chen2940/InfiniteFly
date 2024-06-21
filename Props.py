@@ -1,7 +1,11 @@
 import random, time, pygame, config
 
+import Music
 import Plance
 from Baseitem import Baseitem
+
+
+
 
 
 class Props(Baseitem):
@@ -88,4 +92,8 @@ def bilprprops():
             pr.displayprprops()
         else:
             config.prpropsList.remove(pr)
+def playmusic():
+    m=Music.Music("img/music/collect-points-190037.mp3")
+    m.play()
+
 

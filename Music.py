@@ -10,3 +10,6 @@ class Music:
     # 音乐播放
     def play(self):
         pygame.mixer.music.play()
+
+    def inplay(self):
+        pygame.mixer.music.play(-1)

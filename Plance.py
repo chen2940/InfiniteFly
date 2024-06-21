@@ -1,5 +1,7 @@
 import random
 import pygame, config
+
+import Props
 from Baseitem import Baseitem
 from Bullet import Bullet
 from Music import Music
@@ -83,18 +85,21 @@ class MyPlance(Plance):
     def MyPlance_hit_HP(self):
         for HP in config.hppropslist:
             if pygame.sprite.collide_rect(self, HP):
+                Props.playmusic()
                 self.live += 2
                 HP.live = False
 
     def MyPlance_hit_BU(self):
         for BU in config.bupopslist:
             if pygame.sprite.collide_rect(self, BU):
+                Props.playmusic()
                 config.BulletCount += 3
                 BU.live = False
 
     def MyPlance_hit_Pr(self):
         for Pr in config.prpropsList:
             if pygame.sprite.collide_rect(self, Pr):
+                Props.playmusic()
                 config.Point += 2
                 Pr.live = False
 
@@ -174,14 +179,12 @@ class Boss(EnemyPlance):
 ###
 def createMyPlance(left, top, speed, live):  # 初始化我方飞机
     config.myplance = MyPlance(left, top, speed, live)
-    music = Music('img/start.wav')  # 创建音乐对象
-    music.play()  # 播放音乐
 
 
 def createEnemyPlance(top, left):  # 初始化敌方飞机, 将敌方飞机添加到列表中
     for i in range(config.enemyCount):  # 生成指定敌方飞机数量
         aleft = random.randint(0, left)
-        speed = random.randint(1, 4)
+        speed = random.randint(1, 2)
         enemy = EnemyPlance(aleft, top, speed)
         config.enemyList.append(enemy)
 
