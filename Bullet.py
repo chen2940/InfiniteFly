@@ -70,6 +70,15 @@ class Bullet(Baseitem):
                 config.explodeList.append(explode)
                 config.Point += 1
 
+    def myBullet_hit_OSS(self):
+        for BOSS in config.bosslist:
+            if pygame.sprite.collide_rect(BOSS, self):
+                BOSS.live -= 1
+                self.live = False
+                explode = Explode(BOSS)
+                config.explodeList.append(explode)
+                config.Point += 5
+
     def enemyBullet_hit_myTank(self):
         if config.myplance and config.myplance.live:
             if pygame.sprite.collide_rect(config.myplance, self):
@@ -86,6 +95,7 @@ def blitMyBullet():  # 循环我方子弹列表, 并展示
             myBullet.displayBullet()
             myBullet.move()
             myBullet.myBullet_hit_enemyTank()
+            myBullet.myBullet_hit_OSS()
             myBullet.hitWall()  # 检测我方飞机子弹是否碰撞
         else:
             config.myBulletList.remove(myBullet)
@@ -100,3 +110,4 @@ def blitEnemyBullet():  # 循环敌方子弹列表, 并展示
             enemyBullet.hitWall()  # 检测敌方飞机子弹是否碰撞
         else:
             config.enemyBulletList.remove(enemyBullet)
+

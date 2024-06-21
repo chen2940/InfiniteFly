@@ -7,9 +7,22 @@ import Props
 from Music import Music
 
 
-# 坦克类
-class MainGame:
+def read():
+    with open('img/max.txt', 'r') as file:
+        maxMark = file.read()
+    return int(maxMark)
 
+
+def save():
+    file = open('mark.txt', 'a')
+    file.write(
+        f'于{config.t.tm_year}年{config.t.tm_mon}月{config.t.tm_mday}日{config.t.tm_hour}：{config.t.tm_min},游玩成绩为：{config.Point}\n')
+    if read() < config.Point:
+        fileMAXw = open("img/max.txt", 'w')
+        fileMAXw.write(str(config.Point))
+
+
+class MainGame():
     def __init__(self):
         pass
 
@@ -17,7 +30,7 @@ class MainGame:
     def startGame(self):
         pygame.display.init()  # 加载主窗口
         config.window = pygame.display.set_mode([config.SCREEN_WIDTH, config.SCREEN_HEIGHT])  # 设置窗口大小并显示
-        Plance.createMyPlance(280, 210)
+        Plance.createMyPlance(350, 160, config.MySpeed, config.MyLive)
         # 窗口标题设置
         pygame.display.set_caption("无限飞行" + config.version)
         while True:
@@ -33,23 +46,55 @@ class MainGame:
                         elif event.key == pygame.K_SPACE:
                             config.START = True
                             config.HOME = False
+                        elif event.key == pygame.K_F1:
+                            config.HELP = True
+                            config.START = False
+                            config.HOME = False
                 config.window.blit(config.hbackground, (0, 0))
-                config.window.blit(self.getTextSuface("按空格键开始游戏", 20, pygame.Color(0, 0, 255)), (330, 350))
+                config.window.blit(
+                    self.getTextSuface("按空格键开始游戏", 20, pygame.Color(0, 0, 255)),
+                    (330, 350))
+                config.window.blit(
+                    self.getTextSuface("按F1键查看帮助", 20, pygame.Color(0, 0, 255)),
+                    (340, 380))
+                pygame.display.update()
+            if config.HELP:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        # 退出游戏
+                        self.endGame()
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            self.endGame()
+                        elif event.key == pygame.K_SPACE:
+                            config.START = True
+                            config.HELP = False
+                pygame.draw.rect(config.window, [0, 0, 0], [0, 0, config.SCREEN_WIDTH, config.SCREEN_HEIGHT], 0)
+                config.window.blit(pygame.image.load("img/help.bmp"), (0, 0))
                 pygame.display.update()
             if config.START:
                 if len(config.WallList) == 0:
                     Wall.createWall(145, 100, 6)
                     Wall.createWall(145, 300, 5)  # 初始化墙壁
-                if len(config.enemyList) == 0:
-                    Plance.createEnemyPlance(50, 600)  # 初始化敌方飞机
-                    Plance.createEnemyPlance(350, 600)
+                if len(config.enemyList) == 0 and config.enemy:
+                    if not config.bosslist:
+                        Plance.createEnemyPlance(50, 600)  # 初始化敌方飞机
+                        Plance.createEnemyPlance(350, 600)
+                        config.BOSS = True
+                        config.enemy = False
+                if len(config.bosslist) == 0 and config.BOSS :
+                    if len(config.enemyList) == 2:
+                        Plance.createBossPlance(210, 600)
+                        config.enemy = True
+                        config.BOSS = False
+
                 config.window.blit(config.background, (0, 0))
-                if len(config.hppropslist) == 0 and config.myplance.live == config.Ra:
-                    Props.createHPprops()
-                if len(config.bupopslist) == 0 and config.BulletCount == config.Ra:
-                    Props.createBUprops()
+                Props.createHPprops()
+                Props.createBUprops()
+                Props.createPr()
                 Props.bilHPprops()
                 Props.bilBUprops()
+                Props.bilprprops()
                 # # 颜色填充
                 # config.window.fill(background)
                 # 获取事件
@@ -70,16 +115,17 @@ class MainGame:
                 config.window.blit(
                     self.getTextSuface("得分：%d" % config.Point, 20, config.TEXT_COLOR),
                     (420, 10))
+                config.window.blit(
+                    self.getTextSuface("最高峰分：%d" % read(), 20, config.TEXT_COLOR),
+                    (600, 10))
                 Plance.bilMyPlance()  #展示我方飞机
                 Plance.blitEnemyPlance()  # 展示敌方飞机
+                Plance.blitBossPlance()
                 Bullet.blitMyBullet()  # 我方飞机子弹
                 Bullet.blitEnemyBullet()  # 展示敌方子弹
                 Explode.blitExplode()  # 爆炸效果展示
-                for i in range(0, config.BulletCount):
-                    config.window.blit(pygame.image.load("img/BUc.bmp"), (30 + (i * 25), 425))
-                for i in range(0, config.myplance.live):
-                    config.window.blit(pygame.image.load("img/HPc.bmp"), (30 + (i * 25), 465))
                 Wall.blitWall()  # 展示墙壁
+                self.StateModel()
                 if not config.myplance or not config.myplance.live:
                     config.END = True
                     config.START = False
@@ -108,6 +154,7 @@ class MainGame:
 
     # 结束游戏
     def endGame(self):
+        save()
         print('游戏结束')
         exit()  # 退出游戏
 
@@ -118,6 +165,12 @@ class MainGame:
         # 绘制文字信息
         textSurface = font.render(text, True, color)
         return textSurface
+
+    def StateModel(self):
+        for i in range(0, config.BulletCount):
+            config.window.blit(pygame.image.load("img/BUc.bmp"), (30 + (i * 25), 425))
+        for i in range(0, config.myplance.live):
+            config.window.blit(pygame.image.load("img/HPc.bmp"), (30 + (i * 25), 465))
 
     # 事件获取
     def getEvent(self):
