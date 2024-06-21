@@ -4,7 +4,7 @@ import time
 import pygame
 
 t = time.localtime()
-version = "V3.0rc3"
+version = "V3.0rc5"
 RUN = True
 SCREEN_WIDTH = 800  # 宽度
 SCREEN_HEIGHT = 500  # 高度
